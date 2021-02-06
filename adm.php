@@ -2,4 +2,4 @@
 
 include 'bootstrap/init.php';
 
-include 'views/index-view.php';
+include 'views/admin-view.php';

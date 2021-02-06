@@ -9,3 +9,8 @@ define('SITE_ROOT', $_SERVER['DOCUMENT_ROOT'] . '7map/');
 // site title
 define('SITE_TITLE', 'My Map Project pmod');
 
+// get types from json file
+$json = file_get_contents(SITE_ROOT . "bootstrap/types.json");
+$typesArr = json_decode($json, true);
+// define location tpyes depend on json file
+define('LocationTypes', $typesArr);

@@ -45,10 +45,9 @@
                         <div class="field-title">نوع</div>
                         <div class="field-content">
                             <select name="type" id='l-type'>
-                            <?php //foreach(locationTypes as $key=>$value): ?>
-                            <option value="1">type1</option>
-                            <option value="1">typ2</option>
-                            <?php //endforeach; ?>
+                            <?php foreach(LocationTypes as $key=>$value): ?>
+                                <option value="<?= $key ?>"><?= $value ?></option>
+                            <?php endforeach; ?>
                             </select>
                         </div>
                     </div>
@@ -68,22 +67,7 @@
     <script src="assets/js/jquery.min.js"></script>
     <script src="assets/js/scripts.js"></script>
     <script>
-        $(document).ready(function () {
-            map.on('dblclick', function(ev) {
-            // add marker to map
-            L.marker(ev.latlng).addTo(map);
-            // show modal
-            $(".modal-overlay").fadeIn(500);
-            // print lat and lng 
-            $("#lat-display").val(ev.latlng.lat);
-            $("#lng-display").val(ev.latlng.lng);
-            
-            });
-            // fadeout modal
-            $(".modal-overlay .close").click(function () {
-                $(".modal-overlay").fadeOut(500);
-            });
-        });
+        
         
 
         
