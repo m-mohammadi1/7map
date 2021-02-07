@@ -3,12 +3,12 @@
 
 function isUserLoggedIn()
 {
-    return isset($_SESSION['user_login']);
+    return isset($_SESSION['loginUser']);
 }
 
 function logoutUser()
 {
-    unset($_SESSION['user_login']);
+    unset($_SESSION['loginUser']);
 }
 
 
@@ -60,7 +60,8 @@ function loginUser($username, $password)
     $stmt = $pdo->prepare($sql);
     $stmt->execute([':username' => $username]);
     
-    if ($user = $stmt->fetch(PDO::FETCH_OBJ))
+    $user = $stmt->fetch(PDO::FETCH_OBJ);
+    if ($user)
     {
         if (password_verify($password, $user->password)) {
             $_SESSION['loginUser'] = [

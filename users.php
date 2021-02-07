@@ -44,5 +44,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 }
 
 
-
-include "views/user-login-view.php";
+if (isUserLoggedIn()) {
+    $locations = getLocations(['user_id' => $_SESSION['loginUser']['id']]);
+    include "views/user-view.php";
+} else {
+    include "views/user-login-view.php";
+}

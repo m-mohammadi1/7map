@@ -15,12 +15,26 @@
 <body>
     <div class="main">
         <div class="head">
-            <input type="text" id="search" placeholder="دنبال کجا می گردی؟">
+            <div class="search-box">
+                <input type="text" id="search" placeholder="دنبال کجا می گردی؟" autocomplete="off">
+                <div class="clear"></div>
+                <div class="search-results" style="display: none;">
+
+                    <div class="result-item" data-lat='111' data-lng='222'>
+                        <span class="loc-type">رستوران</span>
+                        <span class="loc-title">رستوران و قوه خانه سنتی سون لرن</span>
+                    </div>
+                    
+                </div>
+            </div>
         </div>
         <div class="mapContainer">
             <div id="map"></div>
         </div>
     </div>
+    <a href="<?= site_url('users.php'); ?>">
+        <img src="assets/img/accunt.png" class="currentLoc">
+    </a>
 
     <div class="modal-overlay" id="addLocationModal" style="display: none;">
         <div class="modal">
@@ -38,6 +52,7 @@
                     <div class="field-row">
                             <div class="field-title">نام مکان</div>
                             <div class="field-content">
+                                <input type="hidden" name="user_id" id='user-id' value="<?= $_SESSION['loginUser']['id']; ?>">
                                 <input type="text" name="title" id='l-title' placeholder="مثلا: دفتر مرکزی سون لرن">
                             </div>
                     </div>
@@ -69,23 +84,23 @@
             <span class="close">x</span>
             <h3 class="modal-title">فرم ورود کاربر</h3>
             <div class="modal-content">
-                <form id='loginForm' action="<?= site_url('process/loginUser.php') ?>" method="post">
+                <form id='loginForm' action="" method="post">
                     <div class="field-row">
                             <div class="field-title">نام کاربری</div>
                             <div class="field-content">
-                                <input type="text" name="title" name="username"  placeholder="نام کاربری خود را وارد کنید">
+                                <input type="text" name="username"  placeholder="نام کاربری خود را وارد کنید">
                             </div>
                     </div>
                     <div class="field-row">
                             <div class="field-title"> رمز عبور</div>
                             <div class="field-content">
-                                <input type="password" name="title" name="password" placeholder="پسورد">
+                                <input type="password" name="password" placeholder="پسورد">
                             </div>
                     </div>
                     <div class="field-row">
-                        <div class="field-title">تایید و ورود</div>
+                        <div class="field-title"><a href="<?= site_url('users.php'); ?>">ثبت نام کنید!</a></div>
                         <div class="field-content">
-                            <input type="submit" value=" ورود ">
+                            <input type="submit" name="login_user" value=" ورود ">
                         </div>
                     </div>
                     <div class="ajax-result-login"></div>
@@ -102,19 +117,25 @@
     <script src="assets/js/scripts.js"></script>
     <script>
 
-        map.on('dblclick', function(ev) {
+        // ajax request to get locations
+        $(document).ready(function () {
 
-
-            // if (session == 0) {
-            //     showLoginModal(ev);
-                
-            // } else {
-            //     // console.log("login");
-            //     showLocationModal(ev);
-
-            // }
+            $("#search").keyup(function () {
+            const input = $(this);
+            const searchResult = $(".search-results");
+            searchResult.html("در حال جستجو");
+            $.ajax({    
+                url: '<?= SITE_URL . 'process/search.php' ?>',
+                method: 'POST',
+                data: {keyword: input.val()},
+                success: function(response) {
+                    searchResult.slideDown().html(response);
+                }
+            });
+        });
 
         });
+        
         
 
         <?php if (@$location): ?>

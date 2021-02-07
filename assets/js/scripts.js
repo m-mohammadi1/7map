@@ -62,9 +62,9 @@ $(document).ready(function () {
             success: function (response) {
                 resultTag.html(response);
             }
-        });
+        }); 
     // end ajax request to save location
-    });
+    }); 
 
 
 
