@@ -1,4 +1,6 @@
 <?php
+session_start();
+ob_start();
 
 include "constants.php";
 include "config.php";
@@ -14,4 +16,5 @@ try {
 
 include SITE_ROOT . DS . "libs/lib-helpers.php";
 include SITE_ROOT . DS . "libs/lib-locations.php";
+include SITE_ROOT . DS . "libs/lib-admins.php";
 include SITE_ROOT . DS . "libs/lib-users.php";

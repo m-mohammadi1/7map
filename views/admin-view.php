@@ -99,19 +99,22 @@
         </tr>
         </thead>
         <tbody>
-        <?php for($i=0;$i<10;$i++): ?>
+        <?php foreach($locations as $location): ?>
         <tr>
-            <td>نام مکان اینجا</td>
-            <td class="text-center">12 خرداد 95</td>
-            <td class="text-center">25.454</td>
-            <td class="text-center">34.456</td>
+            <td><?= $location->title; ?></td>
+            <td class="text-center"><?= $location->created_at; ?></td>
+            <td class="text-center"><?= $location->lat; ?></td>
+            <td class="text-center"><?= $location->lng; ?></td>
             <td>
+            <?php if ($location->verified): ?>
                 <button class="statusToggle active" data-loc='111'>فعال</button> 
+            <?php else: ?>
                 <button class="statusToggle" data-loc='111'>غیر فعال</button> 
+            <?php endif; ?>
                 <button class="preview" data-loc='111'>👁️‍🗨️</button> 
             </td>
         </tr>
-<?php endfor; ?>        
+<?php endforeach; ?>        
         </tbody>
         </table>
         </div>

@@ -22,7 +22,7 @@
         </div>
     </div>
 
-    <div class="modal-overlay" style="display: none;">
+    <div class="modal-overlay" id="addLocationModal" style="display: none;">
         <div class="modal">
             <span class="close">x</span>
             <h3 class="modal-title">ثبت لوکیشن</h3>
@@ -64,14 +64,65 @@
     </div>
 
 
+    <div class="modal-overlay" id="loginModal" style="display: none;">
+        <div class="modal">
+            <span class="close">x</span>
+            <h3 class="modal-title">فرم ورود کاربر</h3>
+            <div class="modal-content">
+                <form id='loginForm' action="<?= site_url('process/loginUser.php') ?>" method="post">
+                    <div class="field-row">
+                            <div class="field-title">نام کاربری</div>
+                            <div class="field-content">
+                                <input type="text" name="title" name="username"  placeholder="نام کاربری خود را وارد کنید">
+                            </div>
+                    </div>
+                    <div class="field-row">
+                            <div class="field-title"> رمز عبور</div>
+                            <div class="field-content">
+                                <input type="password" name="title" name="password" placeholder="پسورد">
+                            </div>
+                    </div>
+                    <div class="field-row">
+                        <div class="field-title">تایید و ورود</div>
+                        <div class="field-content">
+                            <input type="submit" value=" ورود ">
+                        </div>
+                    </div>
+                    <div class="ajax-result-login"></div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <?php $user_id = isset($_SESSION['loginUser']) ? $_SESSION['loginUser']['id'] : 0; ?>
+    <script>
+        var session =  <?php echo $user_id; ?>;
+    </script>
     <script src="assets/js/jquery.min.js"></script>
     <script src="assets/js/scripts.js"></script>
     <script>
-        
+
+        map.on('dblclick', function(ev) {
+
+
+            // if (session == 0) {
+            //     showLoginModal(ev);
+                
+            // } else {
+            //     // console.log("login");
+            //     showLocationModal(ev);
+
+            // }
+
+        });
         
 
-        
-
+        <?php if (@$location): ?>
+            map.setView([<?= $location->lat; ?> , <?= $location->lng;?>], defaultZoom);
+            L.marker([<?= $location->lat; ?> , <?= $location->lng;?>]).addTo(map).bindPopup("<?= $location->title; ?>").openPopup();
+        <?php endif; ?>
     </script>
 </body>
 </html>
+
+

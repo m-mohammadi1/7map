@@ -10,28 +10,45 @@ L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_toke
     zoomOffset: -1
 }).addTo(map);
 
+
+// map.on('dblclick', function(ev) {
+            
+            
+// });
+
+
 $(document).ready(function () {
 
     map.on('dblclick', function(ev) {
-    // add marker to map
-    L.marker(ev.latlng).addTo(map);
-    // show modal
-    $(".modal-overlay").fadeIn(500);
-    // print lat and lng 
-    $("#lat-display").val(ev.latlng.lat);
-    $("#lng-display").val(ev.latlng.lng);
-    // reset values of modal input  
-    $("#l-title").val('');
-    $("#l-type").val(0);
-
+        // add marker to map
+        L.marker(ev.latlng).addTo(map);
+        // show modal
+        
+        if (session != 0) {
+            $("#addLocationModal").fadeIn(500);
+        } else {
+            // show login modal
+            $("#loginModal").fadeIn(500);
+        }
+        // print lat and lng 
+        $("#lat-display").val(ev.latlng.lat);
+        $("#lng-display").val(ev.latlng.lng);
+        // reset values of modal input  
+        $("#l-title").val('');
+        $("#l-type").val(0);
     });
-    // fadeout modal
-    $(".modal-overlay .close").click(function () {
-        $(".modal-overlay").fadeOut(500);
+
+
+    // fadeout locatons modal
+    $("#addLocationModal .close").click(function () {
+        $("#addLocationModal").fadeOut(500);
         // clear last ajax respond
-        $(".ajax-result").html('');
+        $("#addLocationModal .ajax-result").html('');
     });
-
+    // fadeOut login modal
+    $("#loginModal .close").click(function () {
+        $("#loginModal").fadeOut(500);
+    });
 
     // ajax request to save location
     $("form#addLocationForm").submit(function (e) {
@@ -48,4 +65,7 @@ $(document).ready(function () {
         });
     // end ajax request to save location
     });
+
+
+
 });
