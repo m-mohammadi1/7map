@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>7Map Panel</title>
+    <title>بخش کاربری</title>
     <link href="favicon.png" rel="shortcut icon" type="image/png">
 
     <link rel="stylesheet" href="assets/css/styles.css<?="?v=" . rand(99, 9999999)?>" />

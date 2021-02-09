@@ -32,7 +32,7 @@ function getLocations($params = []) {
     global $pdo;
 
     $condition = "";
-    // for user id
+    // by user id
     if (
         array_key_exists('user_id', $params)
         && 
@@ -42,7 +42,10 @@ function getLocations($params = []) {
         ) {
         $condition = " WHERE user_id = {$params['user_id']} and verified = 1";
     }
-    
+    // get locations by status for admin part
+    if (isset($params['verified']) && in_array($params['verified'], ['0', '1'])) {
+        $condition = " WHERE verified = {$params['verified']}";
+    }
 
     $sql = "SELECT * FROM locations $condition";
 
@@ -53,7 +56,7 @@ function getLocations($params = []) {
 }
 
 
-// search for locations
+// search for locations by keyword
 function search($keyword) 
 {
     global $pdo;
@@ -77,4 +80,19 @@ function getLocation($id) {
     $stmt = $pdo->prepare($sql);
     $stmt->execute([':id' => $id]);
     return $stmt->fetch(PDO::FETCH_OBJ);
+}
+
+
+
+// change location status (verified)
+function toggleStatus($id) {
+    global $pdo;
+
+    $num = 
+    $sql = "UPDATE locations SET verified = 1 - verified WHERE id = :id";
+    
+    $stmt = $pdo->prepare($sql);
+    $stmt->execute([':id' => $id]);
+
+    return $stmt->rowCount() > 0 ? 1 : 0;
 }

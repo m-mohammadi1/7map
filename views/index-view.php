@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>7Map</title>
+    <title><?= SITE_NAME; ?></title>
     <link href="favicon.png" rel="shortcut icon" type="image/png">
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A==" crossorigin=""/>
     <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js" integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA==" crossorigin=""></script>
@@ -32,7 +32,7 @@
             <div id="map"></div>
         </div>
     </div>
-    <a href="<?= site_url('users.php'); ?>">
+    <a href="<?= site_url('user.php'); ?>">
         <img src="assets/img/accunt.png" class="currentLoc">
     </a>
 
@@ -98,7 +98,7 @@
                             </div>
                     </div>
                     <div class="field-row">
-                        <div class="field-title"><a href="<?= site_url('users.php'); ?>">ثبت نام کنید!</a></div>
+                        <div class="field-title"><a style="text-decoration: none;" href="<?= site_url('user.php?action=register'); ?>">ثبت نام کنید!</a></div>
                         <div class="field-content">
                             <input type="submit" name="login_user" value=" ورود ">
                         </div>
