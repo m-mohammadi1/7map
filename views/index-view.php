@@ -33,11 +33,11 @@
         </div>
     </div>
     <a href="<?= site_url('user.php'); ?>">
-        <img src="assets/img/accunt.png" class="currentLoc">
+        <img title="بخش کاربری" src="assets/img/accunt.png" class="currentLoc">
     </a>
 
     <a href="<?= site_url('adm.php'); ?>">
-        <img src="assets/img/accunt.png" class="currentLoc" style="opacity: 0.4;right: 10px;">
+        <img title="بخش مدیریت" src="assets/img/manage.png" class="currentLoc" style="right: 10px;background: none;">
     </a>
 
     <div class="modal-overlay" id="addLocationModal" style="display: none;">

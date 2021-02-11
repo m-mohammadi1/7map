@@ -24,7 +24,7 @@ function diePage($msg){
 }
 
 function message($msg,$cssClass = 'info', $color = '#521717', $background = '#f9dede'){
-    echo "<div class='$cssClass' style=';padding: 20px; width: 80%; margin: 10px auto; background: $background; border: 1px solid #cca4a4; color: $color; border-radius: 5px; font-family: tahoma;'>$msg</div>";
+    echo "<div class='$cssClass' style=';padding: 20px; width: 80%; margin: 10px auto; background: $background; border: 1px solid #cca4a4; color: $color; border-radius: 5px;'>$msg</div>";
 }
 
 

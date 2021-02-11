@@ -21,6 +21,7 @@
             </form>
         </div>
         <div style="text-align: center;"><a style="text-decoration: none;color: #007bec;" href="<?= site_url('user.php?action=register'); ?>">اکانت ندارید؟ ثبت نام کنید</a></div>
+        <div style="text-align: center; margin-top: 10px;"><a style="text-decoration: none;color: #007bec;" href="<?= site_url(''); ?>">بازگشت به صفحه اصلی</a></div>
     </div>
 </body>
 </html>

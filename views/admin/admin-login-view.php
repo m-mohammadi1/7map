@@ -21,6 +21,9 @@
                 <input type="submit" value="Login" style="text-align: center">
             </form>
         </div>
+
+        <div style="text-align: center;"><a style="text-decoration: none;color: #007bec;" href="<?= site_url(''); ?>">بازگشت به صفحه اصلی</a></div>
+
     </div>
 
 </body>
