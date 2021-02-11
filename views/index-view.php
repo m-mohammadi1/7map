@@ -36,6 +36,10 @@
         <img src="assets/img/accunt.png" class="currentLoc">
     </a>
 
+    <a href="<?= site_url('adm.php'); ?>">
+        <img src="assets/img/accunt.png" class="currentLoc" style="opacity: 0.4;right: 10px;">
+    </a>
+
     <div class="modal-overlay" id="addLocationModal" style="display: none;">
         <div class="modal">
             <span class="close">x</span>

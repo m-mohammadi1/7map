@@ -7,76 +7,10 @@
     <link href="favicon.png" rel="shortcut icon" type="image/png">
 
     <link rel="stylesheet" href="assets/css/styles.css<?="?v=" . rand(99, 9999999)?>" />
-    <style>
-    body{
-        background:#f2f2f2;
-    }
-    a{
-        text-decoration: none;
-    }
-    h1{
-        text-align: center;
-    }
 
-    .main-panel{
-        width:1000px;
-        margin:30px auto;
-    }
-    .box {
-        background: #fff;
-        padding: 10px 20px;
-        border-radius: 5px;
-        box-shadow: 0px 3px 3px #EEE;
-        margin-bottom: 20px;
-    }
-    table.tabe-locations {
-        width: 100%;
-        border-collapse: collapse;
-    }
-    .statusToggle {
-        background: #eee;
-        color: #686868;
-        border: 0;
-        padding: 3px 12px;
-        border-radius: 20px;
-        cursor: pointer;
-        font-size: 13px;
-        font-weight: 400;
-        font-family: iransans;
-        display:inline-block;
-        margin:0 3px;
-    }
-    .statusToggle.active {
-        background: #0c8f10;
-        color: #ffffff;
-    }
-    .statusToggle:hover,button.preview:hover {
-        opacity: 0.7;
-    }
-    button.preview {
-        padding: 0 10px;
-        background: none;
-        border: none;
-        font-size: 20px;
-        cursor: pointer;
-    }
-    tr {
-        line-height: 36px;
-    }
-    tr:nth-child(2n) {
-        background:#f7f7f7;
-    }
-    td{
-        padding:0 5px;
-    }
-    iframe#mapWivdow {
-        width: 100%;
-        height: 500px;
-    }
-    .text-center{
-        text-align: center;
-    }
-    </style>
+    <link rel="stylesheet" href="assets/css/views-style.css<?="?v=" . rand(99, 9999999)?>" />
+
+    
 </head>
 <body>
     <div class="main-panel">
@@ -85,7 +19,7 @@
             <a class="statusToggle" href="<?=SITE_URL?>" target="_blank">🏠</a>
             <a class="statusToggle active" href="?verified=1">فعال</a>
             <a class="statusToggle" href="?verified=0">غیرفعال</a>
-            <a class="statusToggle" href="?logout=1" style="float:left" target="_blank">خروج</a>
+            <a class="statusToggle" href="?logout=1" style="float:left">خروج</a>
         </div>
         <div class="box">
         <table class="tabe-locations">
