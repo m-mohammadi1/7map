@@ -66,16 +66,20 @@ function drawCircles(ev, radius = 1000) {
     }).addTo(map);  
     // check locations in the radius
     for (var i = 0; i < locations.length; i++) {
-    //  get the location :: done
-    loc = [locations[i]['lat'], locations[i]['lng']] 
-    // calculate the distance between the center of the circle and the location :: done
-    distance = ev.latlng.distanceTo(loc);
-    //  add marker for all locations in the radius :: done
-    if (distance < radius) {
-        marker = L.marker(loc).addTo(map);
-        // push marker to the markers array
-        window.markers.push(marker);
-    }
+        //  get the location :: done
+        loc = [locations[i]['lat'], locations[i]['lng']] 
+        loc_title = locations[i]['title'];
+        if (loc_title.length < 1) {
+            loc_title = "نامشخص";
+        }
+        // calculate the distance between the center of the circle and the location :: done
+        distance = ev.latlng.distanceTo(loc);
+        //  add marker for all locations in the radius :: done
+        if (distance < radius) {
+            marker = L.marker(loc).addTo(map).bindPopup(loc_title).openPopup();
+            // push marker to the markers array
+            window.markers.push(marker);
+        }
     }
 }
 
