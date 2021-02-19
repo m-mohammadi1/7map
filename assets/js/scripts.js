@@ -10,15 +10,10 @@ L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_toke
     zoomOffset: -1
 }).addTo(map);
 
-
-// map.on('dblclick', function(ev) {
-            
-            
-// });
+// ****************************main part of map********************************** //
 var circle;
 var markers = [];
-function getDistance(from, to)
-{
+function getDistance(from, to) {
     return (from.distanceTo(to)).toFixed(0);
 }
 // to display modal based on user login situation
@@ -84,7 +79,6 @@ function drawCircles(ev, radius = 1000) {
     }
 }
 
-
 $(document).ready(function () {
 
     // difrentiate between double click and click
@@ -105,9 +99,7 @@ $(document).ready(function () {
         }
     }, false);
       
-
-    
-
+    /** Modals Part **/
 
     // fadeout locatons modal
     $("#addLocationModal .close").click(function () {
@@ -135,7 +127,5 @@ $(document).ready(function () {
         }); 
     // end ajax request to save location
     }); 
-
-
 
 });
