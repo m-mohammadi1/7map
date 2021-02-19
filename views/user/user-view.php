@@ -39,11 +39,11 @@
             <td class="text-center"><?= $location->lng; ?></td>
             <td>
             <?php if ($location->verified): ?>
-                <button class="statusToggle active" data-loc='111'>فعال</button> 
+                <button  class="statusToggle active center" data-loc='111'>فعال</button> 
+                <button class="preview" data-loc='<?= $location->id; ?>'>👁️‍🗨️</button> 
             <?php else: ?>
-                <button class="statusToggle" data-loc='111'>غیر فعال</button> 
+                <button class="statusToggle center" data-loc='111'>غیر فعال</button> 
             <?php endif; ?>
-                <button class="preview" data-loc='111'>👁️‍🗨️</button> 
             </td>
         </tr>
         <?php endforeach; ?>        
@@ -54,7 +54,7 @@
     </div>
 
     <div class="modal-overlay" style="display: none;">
-        <div class="modal">
+        <div  style="padding: 10px;" class="modal">
             <span class="close">x</span>
             <div class="modal-content">
                 <iframe id='mapWivdow' src="#" frameborder="0"></iframe>
@@ -67,7 +67,7 @@
     $(document).ready(function() {
         $('.preview').click(function() {
             $('.modal-overlay').fadeIn();
-            $('#mapWivdow').attr('src','<?=SITE_URL?>');
+            $('#mapWivdow').attr('src','<?=SITE_URL?>' + '?loc=' + $(this).attr('data-loc'));
         });
         $('.modal-overlay .close').click(function() {
             $('.modal-overlay').fadeOut();

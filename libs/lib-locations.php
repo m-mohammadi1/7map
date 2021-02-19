@@ -40,7 +40,7 @@ function getLocations($params = []) {
         && 
         is_numeric($params['user_id'])
         ) {
-        $condition = " WHERE user_id = {$params['user_id']} and verified = 1";
+        $condition = " WHERE user_id = {$params['user_id']} ";
     }
     // get locations by status for admin part
     if (isset($params['verified']) && in_array($params['verified'], ['0', '1'])) {

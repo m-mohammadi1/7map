@@ -116,13 +116,16 @@
     <?php $user_id = isset($_SESSION['loginUser']) ? $_SESSION['loginUser']['id'] : 0; ?>
     <script>
         var session =  <?php echo $user_id; ?>;
+        var loc_str = '<?= $locations_str ?>';
+        var locations = JSON.parse(loc_str);
     </script>
     <script src="assets/js/jquery.min.js"></script>
-    <script src="assets/js/scripts.js"></script>
+    <script src="assets/js/scripts.js<?= "?i=" . rand(1,999); ?>"></script>
     <script>
-
         // ajax request to get locations
         $(document).ready(function () {
+
+            
 
             $("#search").keyup(function () {
             const input = $(this);

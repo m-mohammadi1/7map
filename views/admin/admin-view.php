@@ -40,9 +40,10 @@
             <td class="text-center"><?= $location->lat; ?></td>
             <td class="text-center"><?= $location->lng; ?></td>
             <td>
-                <button class="statusToggle <?php echo  ($location->verified) ? 'active' : ''; ?>" style="width: 70px;text-align: center;" data-loc='<?= $location->id; ?>'>تایید</button> 
-       
-                <button class="preview" data-loc='<?= $location->id; ?>'>👁️‍🗨️</button> 
+                <button class="statusToggle center <?php echo  ($location->verified) ? 'active' : ''; ?>" data-loc='<?= $location->id; ?>'>تایید</button> 
+                <?php if ($location->verified): ?>
+                    <button class="preview" data-loc='<?= $location->id; ?>'>👁️‍🗨️</button> 
+                <?php endif; ?>
             </td>
         </tr>
         <?php endforeach; ?>        
@@ -88,7 +89,7 @@
         $('.preview').click(function() {
             $('.modal-overlay').fadeIn();
             $('#mapWivdow').attr('src','<?= SITE_URL  ?>' + '?loc=' + $(this).attr('data-loc'));
-        });
+        }); 
         $('.modal-overlay .close').click(function() {
             $('.modal-overlay').fadeOut();
         });

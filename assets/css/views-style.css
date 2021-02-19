@@ -107,3 +107,10 @@ input {
     box-sizing: border-box;
     margin: 5px;
 }
+/*
+costume
+*/
+button.center {
+    width: 80px;
+    text-align: center
+}

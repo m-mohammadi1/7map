@@ -16,5 +16,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['login_user'])) {
     }
 }
 
+// locations vetified
+$locations = (array)getLocations(['verified' => 1]);
+$locations_str = json_encode($locations);
+
 include 'views/index-view.php';
 
+// dd($locations_str);
+?>
