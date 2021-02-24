@@ -54,7 +54,7 @@
     </div>
 
     <div class="modal-overlay" style="display: none;">
-        <div class="modal">
+        <div class="modal" style="margin-top: 25px;">
             <span class="close">x</span>
             <div class="modal-content">
                 <iframe style="padding: 10px 5px" id='mapWivdow' src="#" frameborder="0"></iframe>
