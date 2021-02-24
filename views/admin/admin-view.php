@@ -1,3 +1,4 @@
+<?php use Hekmatinasser\Verta\Verta; ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -36,7 +37,7 @@
         <?php foreach($locations as $location): ?>
         <tr>
             <td><?= $location->title; ?></td>
-            <td class="text-center"><?= $location->created_at; ?></td>
+            <td class="text-center"><?= Verta::instance($location->created_at)->format('%d %B %Y H:i:s'); ?></td>
             <td class="text-center"><?= $location->lat; ?></td>
             <td class="text-center"><?= $location->lng; ?></td>
             <td>

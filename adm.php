@@ -18,6 +18,8 @@ if (isset($_GET['logout'])) {
     logout();
 }
 
+
+
 if (isLoggedIn()) {
     $params = $_GET ?? [];
     $locations = getLocations($params);

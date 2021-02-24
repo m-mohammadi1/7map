@@ -14,6 +14,7 @@ try {
 }
 
 
+include SITE_ROOT . DS . "vendor/autoload.php";
 include SITE_ROOT . DS . "libs/lib-helpers.php";
 include SITE_ROOT . DS . "libs/lib-locations.php";
 include SITE_ROOT . DS . "libs/lib-admins.php";
