@@ -10,6 +10,34 @@
     <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js" integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA==" crossorigin=""></script>
 
     <link rel="stylesheet" href="assets/css/styles.css" />
+    <style>
+    .leaflet-tooltip-left:before {
+    right: 0;
+    margin-right: -12px;
+    border-left-color: rgba(0, 0, 0, 0.4);
+}
+.leaflet-tooltip-right:before {
+    left: 0;
+    margin-left: -12px;
+    border-right-color: rgba(0, 0, 0, 0.4);
+    }
+.leaflet-tooltip-own {
+    position: absolute;
+    padding: 4px;
+    background-color: rgba(0, 0, 0, 0.4);
+    border: 0px solid #000;
+    color: #000;
+    white-space: nowrap;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    pointer-events: none;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.4);
+    word-break: break-all;
+    
+}
+    </style>
 </head>
 
 <body>
@@ -57,13 +85,25 @@
                             <div class="field-title">نام مکان</div>
                             <div class="field-content">
                                 <input type="hidden" name="user_id" id='user-id' value="<?= $_SESSION['loginUser']['id']; ?>">
-                                <input type="text" name="title" id='l-title' placeholder="مثلا: دفتر مرکزی سون لرن">
+                                <input type="text" name="title" id='l-title' placeholder="مثلا: دفتر مرکزی ایران خودرو">
+                            </div>
+                    </div>
+                    <div class="field-row">
+                            <div class="field-title">شماره تلفن</div>
+                            <div class="field-content">
+                                <input type="text" name="phone" id='phone' placeholder="مثلا: 09142356123">
+                            </div>
+                    </div>
+                    <div class="field-row">
+                            <div class="field-title">توضیحات</div>
+                            <div class="field-content">
+                                <textarea name="description" id="" cols="25" rows="5"></textarea>
                             </div>
                     </div>
                     <div class="field-row">
                         <div class="field-title">نوع</div>
                         <div class="field-content">
-                            <select name="type" id='l-type'>
+                            <select  name="type" id='l-type'>
                             <?php foreach(LocationTypes as $key=>$value): ?>
                                 <option value="<?= $key ?>"><?= $value ?></option>
                             <?php endforeach; ?>
@@ -113,6 +153,52 @@
         </div>
     </div>
 
+    <?php if (@$location): ?>
+    <div class="modal-overlay" id="searchResultModal" style="display: none;">
+        <div class="modal">
+            <span class="close">x</span>
+            <h3 class="modal-title">اطلاعات لوکیشن</h3>
+            <div class="modal-content">
+                <div class="field-row">
+                            <div class="field-title">مختصات</div>
+                            <div class="field-content">
+                                <input type="text" name='lat'  readonly style="width: 180px;text-align: center;" value="<?= @$location->lat; ?>">
+                                <input type="text" name='lng'  readonly style="width: 180px;text-align: center;"  value="<?= @$location->lng; ?>">
+                            </div>
+                    </div>
+                    <div class="field-row">
+                            <div class="field-title">نام مکان</div>
+                            <div class="field-content">
+                                <input type="text" name="title" readonly value="<?= $location->title; ?>">
+                            </div>
+                    </div>
+                    <div class="field-row">
+                            <div class="field-title">شماره تلفن</div>
+                            <div class="field-content">
+                                <input type="text" name="phone"  readonly value="<?= $location->phone; ?>">
+                            </div>
+                    </div>
+                    <div class="field-row">
+                            <div class="field-title">توضیحات</div>
+                            <div class="field-content">
+                                <textarea name="description" cols="25" readonly rows="5"><?= $location->description; ?>"</textarea>
+                            </div>
+                    </div>
+                    
+                    <div class="field-row">
+                            <div class="field-title">نوع</div>
+                            <div class="field-content">
+                                <input type="text" name="phone" readonly value="<?= LocationTypes[$location->type] ?>">
+                            </div>
+                    </div>
+        
+            </div>
+        </div>
+    </div>
+    <?php endif; ?>
+
+
+                                
     <?php $user_id = isset($_SESSION['loginUser']) ? $_SESSION['loginUser']['id'] : 0; ?>
     <script>
         var session =  <?php echo $user_id; ?>;
@@ -125,29 +211,40 @@
         // ajax request to get locations
         $(document).ready(function () {
 
+            $("#searchResultModal .close").click(function () {
+                $('#searchResultModal').fadeOut(500);
+            });
             
 
             $("#search").keyup(function () {
-            const input = $(this);
-            const searchResult = $(".search-results");
-            searchResult.html("در حال جستجو");
-            $.ajax({    
-                url: '<?= SITE_URL . 'process/search.php' ?>',
-                method: 'POST',
-                data: {keyword: input.val()},
-                success: function(response) {
-                    searchResult.slideDown().html(response);
-                }
+                const input = $(this);
+                const searchResult = $(".search-results");
+                searchResult.html("در حال جستجو");
+                $.ajax({    
+                    url: '<?= SITE_URL . 'process/search.php' ?>',
+                    method: 'POST',
+                    data: {keyword: input.val()},
+                    success: function(response) {
+                        searchResult.slideDown().html(response);
+                    }
+                });
             });
-        });
 
+            
         });
         
         
 
         <?php if (@$location): ?>
             map.setView([<?= $location->lat; ?> , <?= $location->lng;?>], defaultZoom);
-            L.marker([<?= $location->lat; ?> , <?= $location->lng;?>]).addTo(map).bindPopup("<?= $location->title; ?>").openPopup();
+            // L.marker([<?= ''//$location->lat; ?> , <?= ''//$location->lng;?>]).addTo(map).;
+            var searchMarker = L.marker([<?= $location->lat; ?> , <?= $location->lng;?>]).addTo(map)
+            .bindPopup("<?= $location->title; ?>").openPopup();
+
+
+            searchMarker.on('dblclick' ,function() {
+                $("#searchResultModal").fadeIn(400);
+            });
         <?php endif; ?>
     </script>
 </body>

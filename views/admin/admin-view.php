@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>7Map Panel</title>
+    <title>بخش مدیریت</title>
     <link href="favicon.png" rel="shortcut icon" type="image/png">
 
     <link rel="stylesheet" href="assets/css/styles.css<?="?v=" . rand(99, 9999999)?>" />
@@ -14,19 +14,23 @@
     
 </head>
 <body>
-    <div class="main-panel">
+    <div class="main-panel" style="width: 87%;">
         <h1>پنل مدیریت <span style="color:#007bec"><?= SITE_NAME; ?></span></h1>
         <div class="box">
             <a class="statusToggle" href="<?=SITE_URL?>" target="_blank">🏠</a>
+            <a class="statusToggle active" href="?">همه</a>
             <a class="statusToggle active" href="?verified=1">فعال</a>
             <a class="statusToggle" href="?verified=0">غیرفعال</a>
             <a class="statusToggle" href="?logout=1" style="float:left">خروج</a>
+            <a class="statusToggle" href="?action=types" style="float:left">دسته بندی ها</a>
         </div>
         <div class="box">
         <table class="tabe-locations">
         <thead>
         <tr>
         <th style="width:40%">عنوان مکان</th>
+        <th style="width:40%">توضیحات مکان</th>
+        <th style="width:40%">شماره تلفن</th>
         <th style="width:15%" class="text-center">تاریخ ثبت</th>
         <th style="width:10%" class="text-center">lat</th>
         <th style="width:10%" class="text-center">lng</th>
@@ -37,6 +41,8 @@
         <?php foreach($locations as $location): ?>
         <tr>
             <td><?= $location->title; ?></td>
+            <td style="width: 20%;text-overflow:auto;"><?= $location->description; ?></td>
+            <td><?= $location->phone; ?></td>
             <td class="text-center"><?= Verta::instance($location->created_at)->format('%d %B %Y H:i:s'); ?></td>
             <td class="text-center"><?= $location->lat; ?></td>
             <td class="text-center"><?= $location->lng; ?></td>

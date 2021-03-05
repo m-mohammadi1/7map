@@ -21,9 +21,16 @@ if (isset($_GET['logout'])) {
 
 
 if (isLoggedIn()) {
-    $params = $_GET ?? [];
-    $locations = getLocations($params);
-    include 'views/admin/admin-view.php';
+    $action = $_GET['action'] ?? '';
+    if (!empty($action) && $action == 'types') {
+        $types = getTypes();
+        include 'views/admin/admin-types.php';
+    } else {
+        $params = $_GET ?? [];
+        $locations = getLocations($params);
+        include 'views/admin/admin-view.php';
+    }
 } else {
     include 'views/admin/admin-login-view.php';
 }
+

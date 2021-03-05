@@ -19,3 +19,15 @@ include SITE_ROOT . DS . "libs/lib-helpers.php";
 include SITE_ROOT . DS . "libs/lib-locations.php";
 include SITE_ROOT . DS . "libs/lib-admins.php";
 include SITE_ROOT . DS . "libs/lib-users.php";
+include SITE_ROOT . DS . "libs/lib-types.php";
+
+
+
+
+$locationTypes = $pdo->query("SELECT * FROM types")->fetchAll(PDO::FETCH_OBJ);
+$typesArr = [];
+foreach ($locationTypes as $key => $value) {
+    $typesArr[$value->id] = $value->title;
+}
+define('LocationTypes', $typesArr);
+

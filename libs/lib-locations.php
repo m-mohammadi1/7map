@@ -13,12 +13,17 @@ function addLocation($data = [])
 
    
 
-    $sql = "INSERT INTO locations (user_id, title, lat, lng, type) VALUES (:user_id, :title, :lat, :lng, :type)";
+    $sql = "INSERT INTO locations (user_id, title, description, phone, lat, lng, type) VALUES (:user_id, :title, :description, :phone, :lat, :lng, :type)";
     // prepare the sql
     $stmt = $pdo->prepare($sql);
     // bind values
+    // $outputdata = htmlentities($data['description'],ENT_QUOTES);
+    // die($outputdata);
+
     $stmt->bindValue(':user_id', $data['user_id']);
     $stmt->bindValue(':title', $data['title']);
+    $stmt->bindValue(':description', $data['description']);
+    $stmt->bindValue(':phone', $data['phone']);
     $stmt->bindValue(':lat', $data['lat']);
     $stmt->bindValue(':lng', $data['lng']);
     $stmt->bindValue(':type', $data['type']);

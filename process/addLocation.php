@@ -9,6 +9,10 @@ if (!isAjaxRequest())
 
 // add location
 try {
+    if (empty($_POST['title']) || empty($_POST['phone'])  || empty($_POST['description'])) {
+        echo "لطفا تمامی فیلد ها را پر کنید";
+        return ;
+    }
     if (addLocation($_POST)) {
         echo "مکان مورد نظر با موفقیت ثبت شد و در انتظار تایید است";
     } else {

@@ -69,6 +69,8 @@ function drawCircles(ev, radius = 1000) {
         //  get the location :: done
         loc = [locations[i]['lat'], locations[i]['lng']] 
         loc_title = locations[i]['title'];
+        loc_phone = locations[i]['phone'];
+        loc_description = locations[i]['description'];
         if (loc_title.length < 1) {
             loc_title = "نامشخص";
         }
@@ -77,6 +79,7 @@ function drawCircles(ev, radius = 1000) {
         //  add marker for all locations in the radius :: done
         if (distance < radius) {
             marker = L.marker(loc).addTo(map).bindPopup(loc_title).openPopup();
+            
             // push marker to the markers array
             window.markers.push(marker);
         }
