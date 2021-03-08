@@ -64,8 +64,12 @@
         <img title="بخش کاربری" src="assets/img/accunt.png" class="currentLoc">
     </a>
 
+    <a href="<?= site_url('about.php'); ?>">
+        <img title="درباره ما" src="images/about.png" class="currentLoc" style="right: 10px;background: none; width:26px;">
+    </a>
+
     <a href="<?= site_url('adm.php'); ?>">
-        <img title="بخش مدیریت" src="assets/img/manage.png" class="currentLoc" style="right: 10px;background: none;">
+        <img title="بخش مدیریت" src="assets/img/manage.png" class="currentLoc" style="right: 60px;background: none;">
     </a>
 
     <div class="modal-overlay" id="addLocationModal" style="display: none;">
