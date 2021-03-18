@@ -101,3 +101,16 @@ function toggleStatus($id) {
 
     return $stmt->rowCount() > 0 ? 1 : 0;
 }
+
+
+function getLocationByLatlng($lat, $lng) {
+    global $pdo;
+    
+   
+    $sql = "SELECT * FROM locations WHERE lat = :lat and lng = :lng and verified = 1 LIMIT 1";
+
+    $stmt = $pdo->prepare($sql);
+    $stmt->execute([':lat' => $lat, ':lng' => $lng]);
+
+    return $stmt->fetch(PDO::FETCH_OBJ);
+}

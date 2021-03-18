@@ -13,6 +13,7 @@ L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_toke
 // ****************************main part of map********************************** //
 var circle;
 var markers = [];
+
 function getDistance(from, to) {
     return (from.distanceTo(to)).toFixed(0);
 }
@@ -34,6 +35,26 @@ function modalDisplayer(ev) {
     // reset values of modal input  
     $("#l-title").val('');
     $("#l-type").val(0);
+}
+// marker location find 
+function findMarkerInfoFromDatabaseAndDisplayModal(latlng) {
+    $.ajax({
+        url: site_url + '/process/findMarkerInfo.php',
+        method: 'POST',
+        data: {'lat' : latlng.lat, 'lng' : latlng.lng},
+        success: function (response) {
+            // turn location coming back from ajax result to javascript array
+            var loc_array = JSON.parse(response);
+            $("#markerInfoModal").fadeIn(500);
+            // set values of the modal with location information
+            $("#markerInfoModal #m-lat").val(loc_array['lat']);
+            $("#markerInfoModal #m-lng").val(loc_array['lng']);
+            $("#markerInfoModal #m-title").val(loc_array['title']);
+            $("#markerInfoModal #m-phone").val(loc_array['phone']);
+            $("#markerInfoModal #m-description").html(loc_array['description']);
+            $("#markerInfoModal #m-type").val(locationTypes[loc_array['type']]);
+        }
+    });  
 }
 // make circles around 1000 meters of clicked point
 function drawCircles(ev, radius = 1000) {
@@ -82,8 +103,14 @@ function drawCircles(ev, radius = 1000) {
             
             // push marker to the markers array
             window.markers.push(marker);
+            
+            marker.on('click', function (e) {
+                // console.log(e.latlng.lat);
+                findMarkerInfoFromDatabaseAndDisplayModal(e.latlng);
+            })
         }
     }
+
 }
 
 $(document).ready(function () {
@@ -118,7 +145,6 @@ $(document).ready(function () {
     $("#loginModal .close").click(function () {
         $("#loginModal").fadeOut(500);
     });
-
     // ajax request to save location
     $("form#addLocationForm").submit(function (e) {
         e.preventDefault();
@@ -134,5 +160,13 @@ $(document).ready(function () {
         }); 
     // end ajax request to save location
     }); 
+
+    $("#searchResultModal .close").click(function () {
+        $('#searchResultModal').fadeOut(500);
+    });
+    
+    $("#markerInfoModal .close").click(function () {
+        $('#markerInfoModal').fadeOut(500);
+    });
 
 });

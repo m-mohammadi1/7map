@@ -38,6 +38,9 @@
     
 }
     </style>
+    <script>
+        var locationTypes = JSON.parse('<?= json_encode(LocationTypes); ?>');
+    </script>
 </head>
 
 <body>
@@ -201,13 +204,58 @@
     </div>
     <?php endif; ?>
 
+    <div class="modal-overlay" id="markerInfoModal" style="display: none;">
+        <div class="modal">
+            <span class="close">x</span>
+            <h3 class="modal-title">اطلاعات لوکیشن</h3>
+            <div class="modal-content">
+                <div class="field-row">
+                            <div class="field-title">مختصات</div>
+                            <div class="field-content">
+                            <p id="test"></p>
+                                <input type="text" id='m-lat' readonly style="width: 180px;text-align: center;" value="">
+                                <input type="text" id='m-lng' readonly style="width: 180px;text-align: center;"  value="">
+                            </div>
+                    </div>
+                    <div class="field-row">
+                            <div class="field-title">نام مکان</div>
+                            <div class="field-content">
+                                <input type="text" id='m-title' name="title" readonly value="">
+                            </div>
+                    </div>
+                    <div class="field-row">
+                            <div class="field-title">شماره تلفن</div>
+                            <div class="field-content">
+                                <input type="text" id='m-phone' name="phone"  readonly value="">
+                            </div>
+                    </div>
+                    <div class="field-row">
+                            <div class="field-title">توضیحات</div>
+                            <div class="field-content">
+                                <textarea name="description" id='m-description' cols="25" readonly rows="5"></textarea>
+                            </div>
+                    </div>
+                    
+                    <div class="field-row">
+                            <div class="field-title">نوع</div>
+                            <div class="field-content">
+                                <input type="text" name="phone" id='m-type' readonly value="">
+                            </div>
+                    </div>
+        
+            </div>
+        </div>
+    </div>
+
 
                                 
     <?php $user_id = isset($_SESSION['loginUser']) ? $_SESSION['loginUser']['id'] : 0; ?>
     <script>
+        var site_url = '<?= SITE_URL ?>';
         var session =  <?php echo $user_id; ?>;
         var loc_str = '<?= $locations_str ?>';
         var locations = JSON.parse(loc_str);
+        
     </script>
     <script src="assets/js/jquery.min.js"></script>
     <script src="assets/js/scripts.js<?= "?i=" . rand(1,999); ?>"></script>
@@ -215,9 +263,7 @@
         // ajax request to get locations
         $(document).ready(function () {
 
-            $("#searchResultModal .close").click(function () {
-                $('#searchResultModal').fadeOut(500);
-            });
+            
             
 
             $("#search").keyup(function () {
@@ -234,6 +280,8 @@
                 });
             });
 
+
+            
             
         });
         
