@@ -8,38 +8,42 @@
     <link href="favicon.png" rel="shortcut icon" type="image/png">
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A==" crossorigin=""/>
     <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js" integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA==" crossorigin=""></script>
-
     <link rel="stylesheet" href="assets/css/styles.css" />
     <style>
-    .leaflet-tooltip-left:before {
-    right: 0;
-    margin-right: -12px;
-    border-left-color: rgba(0, 0, 0, 0.4);
-}
-.leaflet-tooltip-right:before {
-    left: 0;
-    margin-left: -12px;
-    border-right-color: rgba(0, 0, 0, 0.4);
-    }
-.leaflet-tooltip-own {
-    position: absolute;
-    padding: 4px;
-    background-color: rgba(0, 0, 0, 0.4);
-    border: 0px solid #000;
-    color: #000;
-    white-space: nowrap;
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
-    pointer-events: none;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.4);
-    word-break: break-all;
-    
-}
+        .leaflet-tooltip-left:before {
+        right: 0;
+        margin-right: -12px;
+        border-left-color: rgba(0, 0, 0, 0.4);
+        }   
+        .leaflet-tooltip-right:before {
+            left: 0;
+            margin-left: -12px;
+            border-right-color: rgba(0, 0, 0, 0.4);
+            }
+        .leaflet-tooltip-own {
+            position: absolute;
+            padding: 4px;
+            background-color: rgba(0, 0, 0, 0.4);
+            border: 0px solid #000;
+            color: #000;
+            white-space: nowrap;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+            pointer-events: none;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.4);
+            word-break: break-all;
+            
+        }
     </style>
     <script>
         var locationTypes = JSON.parse('<?= json_encode(LocationTypes); ?>');
+        <?php
+        if (isset($_GET['distance']) && is_numeric($_GET['distance']) && (100 < $_GET['distance'] && $_GET['distance'] < 10000000)) {
+            echo "var radiusWant = \"{$_GET['distance']}\";";
+        }
+        ?>
     </script>
 </head>
 
@@ -53,7 +57,7 @@
 
                     <div class="result-item" data-lat='111' data-lng='222'>
                         <span class="loc-type">رستوران</span>
-                        <span class="loc-title">رستوران و قوه خانه سنتی سون لرن</span>
+                        <span class="loc-title">رستوران و قوه خانه سنتی ایرانیان</span>
                     </div>
                     
                 </div>
@@ -235,65 +239,31 @@
                                 <textarea name="description" id='m-description' cols="25" readonly rows="5"></textarea>
                             </div>
                     </div>
-                    
                     <div class="field-row">
                             <div class="field-title">نوع</div>
                             <div class="field-content">
                                 <input type="text" name="phone" id='m-type' readonly value="">
                             </div>
                     </div>
-        
             </div>
         </div>
-    </div>
-
-
-                                
+    </div>          
     <?php $user_id = isset($_SESSION['loginUser']) ? $_SESSION['loginUser']['id'] : 0; ?>
     <script>
         var site_url = '<?= SITE_URL ?>';
         var session =  <?php echo $user_id; ?>;
         var loc_str = '<?= $locations_str ?>';
         var locations = JSON.parse(loc_str);
-        
     </script>
+
     <script src="assets/js/jquery.min.js"></script>
     <script src="assets/js/scripts.js<?= "?i=" . rand(1,999); ?>"></script>
     <script>
-        // ajax request to get locations
-        $(document).ready(function () {
-
-            
-            
-
-            $("#search").keyup(function () {
-                const input = $(this);
-                const searchResult = $(".search-results");
-                searchResult.html("در حال جستجو");
-                $.ajax({    
-                    url: '<?= SITE_URL . 'process/search.php' ?>',
-                    method: 'POST',
-                    data: {keyword: input.val()},
-                    success: function(response) {
-                        searchResult.slideDown().html(response);
-                    }
-                });
-            });
-
-
-            
-            
-        });
-        
-        
-
         <?php if (@$location): ?>
             map.setView([<?= $location->lat; ?> , <?= $location->lng;?>], defaultZoom);
             // L.marker([<?= ''//$location->lat; ?> , <?= ''//$location->lng;?>]).addTo(map).;
             var searchMarker = L.marker([<?= $location->lat; ?> , <?= $location->lng;?>]).addTo(map)
             .bindPopup("<?= $location->title; ?>").openPopup();
-
-
             searchMarker.on('dblclick' ,function() {
                 $("#searchResultModal").fadeIn(400);
             });
@@ -301,5 +271,3 @@
     </script>
 </body>
 </html>
-
-

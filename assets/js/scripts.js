@@ -11,9 +11,11 @@ L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_toke
 }).addTo(map);
 
 // ****************************main part of map********************************** //
-var circle;
-var markers = [];
 
+var circle; // used for drawing circle
+var markers = []; // used for saving markers that are in the circle
+
+// get distance in meteres
 function getDistance(from, to) {
     return (from.distanceTo(to)).toFixed(0);
 }
@@ -57,7 +59,7 @@ function findMarkerInfoFromDatabaseAndDisplayModal(latlng) {
     });  
 }
 // make circles around 1000 meters of clicked point
-function drawCircles(ev, radius = 1000) {
+function drawCircles(ev, radius = 2000) {
     // var radius = prompt("فاصله مورد نظر را در مقیاس کیلومتر وارد کنید"); // meters
     var radius = radius; // meters
     var locationsInRadius = [];
@@ -99,13 +101,13 @@ function drawCircles(ev, radius = 1000) {
         distance = ev.latlng.distanceTo(loc);
         //  add marker for all locations in the radius :: done
         if (distance < radius) {
+            // draw marker
             marker = L.marker(loc).addTo(map).bindPopup(loc_title).openPopup();
-            
             // push marker to the markers array
             window.markers.push(marker);
             
             marker.on('click', function (e) {
-                // console.log(e.latlng.lat);
+                // ajax request to find location
                 findMarkerInfoFromDatabaseAndDisplayModal(e.latlng);
             })
         }
@@ -133,7 +135,7 @@ $(document).ready(function () {
         }
     }, false);
       
-    /** Modals Part **/
+    /** Modals Part start **/
 
     // fadeout locatons modal
     $("#addLocationModal .close").click(function () {
@@ -145,8 +147,22 @@ $(document).ready(function () {
     $("#loginModal .close").click(function () {
         $("#loginModal").fadeOut(500);
     });
+    
+    $("#searchResultModal .close").click(function () {
+        $('#searchResultModal').fadeOut(500);
+    });
+    
+    $("#markerInfoModal .close").click(function () {
+        $('#markerInfoModal').fadeOut(500);
+    });
+    
+    /** Modals Part end **/
+
+
+    /**  ajax part start  **/
+
     // ajax request to save location
-    $("form#addLocationForm").submit(function (e) {
+     $("form#addLocationForm").submit(function (e) {
         e.preventDefault();
         var form = $(this);
         var resultTag = $(".ajax-result");
@@ -160,13 +176,20 @@ $(document).ready(function () {
         }); 
     // end ajax request to save location
     }); 
-
-    $("#searchResultModal .close").click(function () {
-        $('#searchResultModal').fadeOut(500);
+     // ajax request to search
+    $("#search").keyup(function () {
+        const input = $(this);
+        const searchResult = $(".search-results");
+        searchResult.html("در حال جستجو");
+        $.ajax({    
+            url:  site_url + 'process/search.php',
+            method: 'POST',
+            data: {keyword: input.val()},
+            success: function(response) {
+                searchResult.slideDown().html(response);
+            }
+        });
     });
-    
-    $("#markerInfoModal .close").click(function () {
-        $('#markerInfoModal').fadeOut(500);
-    });
+    /**  ajax part end  **/
 
 });
